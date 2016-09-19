@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  district: MyString
+  rcount: 1
+  total_area: 1
+  resident_area: 1
+  trx_type: MyString
+
+two:
+  district: MyString
+  rcount: 1
+  total_area: 1
+  resident_area: 1
+  trx_type: MyString
