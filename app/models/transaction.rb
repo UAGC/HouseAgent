@@ -1,13 +1,14 @@
 class Transaction < ApplicationRecord
-  # result = this - tx
-  def diff(tx)
-    return unless tx.district == @district && @trx_date == tx.trx_date && tx.trx_type==@trx_type
-    t_area=@total_area - tx.total_area
-    r_area=@resident_area - tx.resident_area
-    rc=@rcount-tx.rcount
-    m=t_area * r_area * rcount
-    return if m==0
-    type=( m <0 ? '_ERROR_' : '')+@trx_type
-    Transaction.new(district: @district, total_area: t_area, rcount: rc, resident_area: r_area, trx_date: @trx_date, trx_type: type)
+  # Returns this - tx, tx starts with "stx_"
+  def separate(tx)
+    return 'no same district' unless tx.district == district
+    return 'no same date' unless tx.trx_date == trx_date
+    return 'no same type' unless tx.trx_type.match(trx_type)
+    return 'no area increased' if tx.total_area == total_area
+    dta = total_area - tx.total_area
+    dra = resident_area - tx.resident_area
+    drc = rcount - tx.rcount
+    type = (dta * dra * drc < 0 ? '_ERROR_' : '') + trx_type
+    Transaction.new(district: district, total_area: dta, rcount: drc, resident_area: dra, trx_date: trx_date, trx_type: type)
   end
 end

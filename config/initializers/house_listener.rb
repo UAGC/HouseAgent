@@ -25,18 +25,22 @@ class HouseListener
   # old
   def compute_transactions
     today=(Time.now.utc+60*60*8).to_date.to_s
+    had=Transaction.where(trx_date: today, trx_type: 'stx_new')+Transaction.where(trx_date: today, trx_type: 'stx_second')
     news=fetch_statistics
-    had=Transaction.find_by(trx_date: today)
-    if had
+    if had.any?
       news.each do |tx|
-        cur=Transaction.find_by(trx_date: today,district: tx.district, trx_type: tx.trx_type)
-        next unless cur
-        new_tx=tx.diff(cur)
-        new_tx ? new_tx.save : cur.touch&&cur.save
+        cur=Transaction.find_by!(trx_date: today,district: tx.district, trx_type: 'stx_'+tx.trx_type)
+        item = tx.separate(cur)
+        item&.is_a?(Transaction) ? item.save : (cur.touch&&cur.save && puts(" -------invalid item");)
       end
     else
-      news.each{|tx| tx.save}
+      news.each do |tx| 
+        tx.trx_type='stx_'+tx.trx_type
+        tx.save
+      end
     end
+    had.each{|t| t.destroy} if news.first.trx_date==today
+
   end
 
   def listen
@@ -54,4 +58,4 @@ class HouseListener
   end
 end
 
-HouseListener.new.compute_transactions
+#HouseListener.new.compute_transactions
