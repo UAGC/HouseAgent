@@ -19,7 +19,7 @@ class HouseListener
                     rcount: item[2].to_i,
                     resident_area: (item[3].to_f*100).to_i,
                     trx_date: (Time.now.utc+60*60*8).to_date.to_s,
-                    trx_type: seq>7 ? 'new' : 'second')
+                    trx_type: seq>7 ? 'second' : 'new')
   end
 
   # old
