@@ -2,6 +2,11 @@ class TransactionController < ApplicationController
   def initialize
     @listener = HouseListener.new
   end
+  
+  def index
+    @listener.compute_transactions
+    @txs= Transaction.all
+  end
 
   def home
     @listener.compute_transactions

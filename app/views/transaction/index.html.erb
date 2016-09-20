@@ -1,0 +1,17 @@
+<h1> All Transactions </h1>
+
+<ul>
+
+  <p> <%= @txs.size %> items</p>
+  <% @txs.each do |tx| %>
+    <li>
+      <%= tx.trx_date %>
+      <%= tx.trx_type %>
+      <%= tx.district %>
+      <%= tx.rcount %>
+      <%= tx.resident_area %>
+      <%= tx.total_area %>
+      <%= tx.updated_at %>
+    </li>
+    <% end %>
+</ul>
