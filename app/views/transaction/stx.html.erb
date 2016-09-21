@@ -1,0 +1,14 @@
+<p> <%= @txs.size %> items</p>
+<table>
+  <% @txs.each do |tx| %>
+      <tr>
+        <td>      <%= tx.trx_date %>       </td>
+        <td>      <%= tx.trx_type %>             </td>
+        <td>      <%= tx.district %>             </td>
+        <td>      <%= tx.rcount %>               </td>
+        <td>      <%= tx.resident_area %>        </td>
+        <td>      <%= tx.total_area %>           </td>
+        <td>      <%= tx.updated_at %>           </td>
+      </tr>
+  <% end %>
+</table>

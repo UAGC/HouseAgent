@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919135256) do
+ActiveRecord::Schema.define(version: 20160921130555) do
+
+  create_table "hellos", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "transactions", force: :cascade do |t|
+    t.text    "district"
+    t.integer "rcount"
+    t.integer "total_area"
+    t.integer "resident_area"
+    t.text    "trx_type"
+    t.text    "created_at",    null: false
+    t.text    "updated_at",    null: false
+    t.date    "trx_date"
+  end
+
+  create_table "transactions123", force: :cascade do |t|
     t.text    "district"
     t.integer "rcount"
     t.integer "total_area"

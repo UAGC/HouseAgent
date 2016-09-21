@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>HouseAgent</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>RTest</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag "bootstrap" %>
+  <%= javascript_include_tag 'bootstrap' %>
+  <%= javascript_include_tag 'Chart.bundle' %>
+  <%= javascript_include_tag 'jquery-3.1.0' %>
 
-  <body>
-    <%= yield %>
-  </body>
+</head>
+
+<body>
+<%= render 'layouts/header' %>
+<div class="container">
+  <%= yield %>
+</div>
+<%= render 'layouts/footer' %>
+
+</body>
 </html>

@@ -1,0 +1,43 @@
+<canvas id="myChart" width="400" height="400"></canvas>
+<p>info --<%= @info %></p>
+<script>
+  function parseLabels(str) {
+    str.split("&quot;");
+  }
+  var _labels = '<%= raw @labels %>';
+  var _rnew = '<%= @rnew %>';
+  var _rsecond = '<%= @rsecond %>';
+  _labels = _labels.split(/[\[\]," ]/).filter(Boolean);
+  _rnew = _rnew.split(/[\[\]," ]/).filter(Boolean);
+  _rsecond = _rsecond.split(/[\[\]," ]/).filter(Boolean);
+  console.log(_labels);
+  console.log(_rnew);
+  console.log(_rsecond);
+  var ctx = document.getElementById("myChart");
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: _labels,
+      datasets: [
+        {
+          label: 'new',
+          borderColor: "rgba(75,192,192,1)",
+          data: _rnew
+        },
+        {
+          label: 'second',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          data: _rsecond
+        }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+</script>

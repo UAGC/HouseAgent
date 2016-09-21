@@ -19,7 +19,7 @@ class HouseListener
                     rcount: item[2].to_i,
                     resident_area: (item[3].to_f*100).to_i,
                     trx_date: (Time.now.utc+60*60*8).to_date.to_s,
-                    trx_type: seq>7 ? 'second' : 'new')
+                    trx_type: seq<7 ? 'new' : 'second')
   end
 
   # old
@@ -27,10 +27,14 @@ class HouseListener
     today=(Time.now.utc+60*60*8).to_date.to_s
     had=Transaction.where(trx_date: today, trx_type: 'stx_new')+Transaction.where(trx_date: today, trx_type: 'stx_second')
     news=fetch_statistics
+    news.each { |i| puts "#{i.trx_date} #{i.total_area} #{i.trx_type}"}
     if had.any?
       news.each do |tx|
         cur=Transaction.find_by!(trx_date: today,district: tx.district, trx_type: 'stx_'+tx.trx_type)
         item = tx.separate(cur)
+        puts "tx --> type:#{tx.trx_type}"
+        puts "cur --> type:#{cur.trx_type}"
+        puts "news--type:#{item.trx_type}" if item&.is_a?(Transaction)
         item&.is_a?(Transaction) ? item.save : (cur.touch&&cur.save && puts(" -------invalid item");)
       end
     else
@@ -40,7 +44,6 @@ class HouseListener
       end
     end
     had.each{|t| t.destroy} if news.first.trx_date==today
-
   end
 
   def listen
