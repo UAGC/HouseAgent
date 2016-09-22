@@ -1,5 +1,4 @@
 class TransactionController < ApplicationController
-  before_action { HouseCrawler.new.check! }
   before_action { @today=(Time.now.utc+60*60*8).to_date.to_s }
 
   def stx
